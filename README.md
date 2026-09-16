@@ -44,6 +44,16 @@ Feliz cumple a mi amiga &lt;3
       margin-top: 10px;
       color: #333;
     }
+    #retryBtn {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -60,6 +70,16 @@ Feliz cumple a mi amiga &lt;3
   <!-- Juego Snake -->
   <canvas id="snakeCanvas" width="300" height="300"></canvas>
   <p id="juegoMensaje"></p>
+  <button id="retryBtn" onclick="reiniciarJuego()">🔄 Reintentar</button>
+
+  <!-- Mini tutorial -->
+  <div id="tutorial" style="display:none; margin-top:20px;">
+    <h3>📖 Cómo jugar:</h3>
+    <p>Usa las flechas del teclado ⬅️ ⬆️ ➡️ ⬇️ para mover la serpiente.</p>
+    <p>Come la comida verde 🍏 para crecer.</p>
+    <p>Si chocas contra los bordes o contigo misma 💀 → Game Over.</p>
+    <p>Al llegar a 5 puntos 🎉 → ¡Sorpresa especial!</p>
+  </div>
 
   <script>
     function verificar() {
@@ -68,6 +88,7 @@ Feliz cumple a mi amiga &lt;3
         document.getElementById("mensaje").innerHTML = 
           "✨ FELIZ CUMPLE AMIGA 💖<br>TE QUIERO MUCHO 🎂🎶";
         document.getElementById("snakeCanvas").style.display = "block";
+        document.getElementById("tutorial").style.display = "block";
         iniciarJuego();
       } else {
         document.getElementById("mensaje").innerHTML = 
@@ -88,13 +109,14 @@ Feliz cumple a mi amiga &lt;3
         y: Math.floor(Math.random()*20)*box
       };
       score = 0;
-      document.addEventListener("keydown", event => {
-        if(event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
-        if(event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
-        if(event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
-        if(event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
-      });
+      document.getElementById("juegoMensaje").innerHTML = "";
+      document.getElementById("retryBtn").style.display = "none";
+      if(game) clearInterval(game);
       game = setInterval(draw, 100);
+    }
+
+    function reiniciarJuego() {
+      iniciarJuego();
     }
 
     function draw() {
@@ -136,12 +158,14 @@ Feliz cumple a mi amiga &lt;3
          snake.slice(1).some(seg => seg.x === snakeX && seg.y === snakeY)) {
         clearInterval(game);
         document.getElementById("juegoMensaje").innerHTML = "💀 Game Over";
+        document.getElementById("retryBtn").style.display = "inline-block";
       }
 
       if(score === 5) {
         document.getElementById("juegoMensaje").innerHTML = 
           "🎉 FELICITACIONES. Te ganaste algo hecho por Fiore <3 🎁";
         clearInterval(game);
+        document.getElementById("retryBtn").style.display = "inline-block";
       }
     }
   </script>
