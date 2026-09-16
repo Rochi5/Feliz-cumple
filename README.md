@@ -1,7 +1,7 @@
 # Feliz-cumple
 Feliz cumple a mi amiga &lt;3
 
-
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -30,7 +30,7 @@ Feliz cumple a mi amiga &lt;3
       border: 3px solid #ff6f61;
       background: #fafafa;
       margin-top: 20px;
-      display: none; /* Oculto al inicio */
+      display: none;
     }
     #mensaje {
       font-size: 2em;
@@ -43,6 +43,11 @@ Feliz cumple a mi amiga &lt;3
       font-size: 1.2em;
       margin-top: 10px;
       color: #333;
+    }
+    #score {
+      font-size: 1.3em;
+      color: #0066ff;
+      margin-top: 10px;
     }
     #retryBtn {
       display: none;
@@ -59,7 +64,6 @@ Feliz cumple a mi amiga &lt;3
 <body>
   <h1>🎉 ¡Feliz Cumpleaños! 🎂</h1>
   <div class="card">
-    <!-- Foto de Coni -->
     <img src="Coni_foto.jpg" alt="Foto de Coni">
     <p>Inserta tu apodo:</p>
     <input type="text" id="apodo">
@@ -67,16 +71,15 @@ Feliz cumple a mi amiga &lt;3
     <p id="mensaje"></p>
   </div>
 
-  <!-- Juego Snake -->
   <canvas id="snakeCanvas" width="300" height="300"></canvas>
+  <p id="score"></p>
   <p id="juegoMensaje"></p>
   <button id="retryBtn" onclick="reiniciarJuego()">🔄 Reintentar</button>
 
-  <!-- Mini tutorial -->
   <div id="tutorial" style="display:none; margin-top:20px;">
     <h3>📖 Cómo jugar:</h3>
     <p>Usa las flechas del teclado ⬅️ ⬆️ ➡️ ⬇️ para mover la serpiente.</p>
-    <p>Come la comida verde 🍏 para crecer.</p>
+    <p>Come la comida verde 🍏 para ganar puntos.</p>
     <p>Si chocas contra los bordes o contigo misma 💀 → Game Over.</p>
     <p>Al llegar a 5 puntos 🎉 → ¡Sorpresa especial!</p>
   </div>
@@ -109,10 +112,11 @@ Feliz cumple a mi amiga &lt;3
         y: Math.floor(Math.random()*20)*box
       };
       score = 0;
+      document.getElementById("score").innerHTML = "⭐ Puntos: " + score;
       document.getElementById("juegoMensaje").innerHTML = "";
       document.getElementById("retryBtn").style.display = "none";
       if(game) clearInterval(game);
-      game = setInterval(draw, 100);
+      game = setInterval(draw, 200); // más lento y jugable
     }
 
     function reiniciarJuego() {
@@ -143,6 +147,7 @@ Feliz cumple a mi amiga &lt;3
 
       if(snakeX === food.x && snakeY === food.y) {
         score++;
+        document.getElementById("score").innerHTML = "⭐ Puntos: " + score;
         food = {
           x: Math.floor(Math.random()*20)*box,
           y: Math.floor(Math.random()*20)*box
@@ -171,3 +176,4 @@ Feliz cumple a mi amiga &lt;3
   </script>
 </body>
 </html>
+
