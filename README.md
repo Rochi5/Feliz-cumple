@@ -1,7 +1,7 @@
 # Feliz-cumple
 Feliz cumple a mi amiga &lt;3
 
-<!DOCTYPE html>
+
 <html lang="es">
 <head>
   <meta charset="UTF-8">
