@@ -188,8 +188,11 @@ Feliz cumple a mi amiga &lt;3
       }
     }
 
-    // Listener de flechas bien colocado
+    // 🔑 Bloqueamos el scroll de la página con preventDefault
     document.addEventListener("keydown", function(event) {
+      if(["ArrowLeft","ArrowUp","ArrowRight","ArrowDown"].includes(event.key)) {
+        event.preventDefault(); // evita que se mueva la página
+      }
       if(event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
       if(event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
       if(event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
