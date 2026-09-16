@@ -26,11 +26,17 @@ Feliz cumple a mi amiga &lt;3
       border-radius: 15px;
       margin-bottom: 20px;
     }
+    #gameArea {
+      display: none;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+    }
     #snakeCanvas {
       border: 3px solid #ff6f61;
       background: #fafafa;
-      margin-top: 20px;
-      display: none;
     }
     #mensaje {
       font-size: 2em;
@@ -39,15 +45,15 @@ Feliz cumple a mi amiga &lt;3
       margin-top: 15px;
       text-shadow: 2px 2px #fff;
     }
-    #juegoMensaje {
-      font-size: 1.2em;
-      margin-top: 10px;
-      color: #333;
-    }
     #score {
       font-size: 1.3em;
       color: #0066ff;
       margin-top: 10px;
+    }
+    #juegoMensaje {
+      font-size: 1.2em;
+      margin-top: 10px;
+      color: #333;
     }
     #retryBtn {
       display: none;
@@ -58,6 +64,12 @@ Feliz cumple a mi amiga &lt;3
       border: none;
       border-radius: 10px;
       cursor: pointer;
+    }
+    #tutorial {
+      font-size:1.1em;
+      color:#444;
+      text-align:left;
+      max-width:200px;
     }
   </style>
 </head>
@@ -71,35 +83,37 @@ Feliz cumple a mi amiga &lt;3
     <p id="mensaje"></p>
   </div>
 
-  <canvas id="snakeCanvas" width="300" height="300"></canvas>
-  <p id="score"></p>
-  <p id="juegoMensaje"></p>
-  <button id="retryBtn" onclick="reiniciarJuego()">🔄 Reintentar</button>
-
-  <div id="tutorial" style="display:none; margin-top:20px;">
-    <h3>📖 Cómo jugar:</h3>
-    <p>Usa las flechas del teclado ⬅️ ⬆️ ➡️ ⬇️ para mover la serpiente.</p>
-    <p>Come la comida verde 🍏 para ganar puntos.</p>
-    <p>Si chocas contra los bordes o contigo misma 💀 → Game Over.</p>
-    <p>Al llegar a 5 puntos 🎉 → ¡Sorpresa especial!</p>
+  <div id="gameArea">
+    <div>
+      <canvas id="snakeCanvas" width="300" height="300"></canvas>
+      <p id="score"></p>
+      <p id="juegoMensaje"></p>
+      <button id="retryBtn" onclick="reiniciarJuego()">🔄 Reintentar</button>
+    </div>
+    <div id="tutorial">
+      <h3>📖 Cómo jugar:</h3>
+      <p>Usa las flechas del teclado ⬅️ ⬆️ ➡️ ⬇️ para mover la serpiente.</p>
+      <p>Come la comida verde 🍏 para ganar puntos.</p>
+      <p>Si chocas contra los bordes o contigo misma 💀 → Game Over.</p>
+      <p>Al llegar a 5 puntos 🎉 → ¡Sorpresa especial!</p>
+    </div>
   </div>
 
   <script>
+    let canvas, ctx, box, snake, direction, food, score, game;
+
     function verificar() {
       let apodo = document.getElementById("apodo").value.toLowerCase();
       if(apodo === "coni") {
         document.getElementById("mensaje").innerHTML = 
           "✨ FELIZ CUMPLE AMIGA 💖<br>TE QUIERO MUCHO 🎂🎶";
-        document.getElementById("snakeCanvas").style.display = "block";
-        document.getElementById("tutorial").style.display = "block";
+        document.getElementById("gameArea").style.display = "flex";
         iniciarJuego();
       } else {
         document.getElementById("mensaje").innerHTML = 
           "❌ Ese no es el apodo correcto...";
       }
     }
-
-    let canvas, ctx, box, snake, direction, food, score, game;
 
     function iniciarJuego() {
       canvas = document.getElementById("snakeCanvas");
@@ -116,7 +130,7 @@ Feliz cumple a mi amiga &lt;3
       document.getElementById("juegoMensaje").innerHTML = "";
       document.getElementById("retryBtn").style.display = "none";
       if(game) clearInterval(game);
-      game = setInterval(draw, 200); // más lento y jugable
+      game = setInterval(draw, 500); // más lento y jugable
     }
 
     function reiniciarJuego() {
@@ -173,6 +187,14 @@ Feliz cumple a mi amiga &lt;3
         document.getElementById("retryBtn").style.display = "inline-block";
       }
     }
+
+    // Listener de flechas bien colocado
+    document.addEventListener("keydown", function(event) {
+      if(event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+      if(event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+      if(event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+      if(event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+    });
   </script>
 </body>
 </html>
